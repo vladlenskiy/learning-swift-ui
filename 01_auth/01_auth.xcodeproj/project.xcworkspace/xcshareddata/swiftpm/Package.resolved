@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "linknavigator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/interactord/LinkNavigator.git",
+      "state" : {
+        "revision" : "0ed08251a4a06bb06d0a884fca6f9ba7eadab134",
+        "version" : "0.8.9"
+      }
+    },
+    {
+      "identity" : "urlencodedform",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/interactord/URLEncodedForm",
+      "state" : {
+        "revision" : "5f51aa13d41b26fc8833cd040df3a3101768bb64",
+        "version" : "1.0.8"
+      }
+    }
+  ],
+  "version" : 2
+}

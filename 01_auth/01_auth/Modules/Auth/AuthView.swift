@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import LinkNavigator
 
 public struct PlaceholderStyle: ViewModifier {
     var showPlaceHolder: Bool
@@ -25,10 +26,23 @@ public struct PlaceholderStyle: ViewModifier {
     }
 }
 
+struct AuthRouteBuilder: RouteBuilder {
+    var matchPath: String { "Login" }
+    
+    var build: (LinkNavigatorType, [String: String], DependencyType) -> MatchingViewController? {
+        { navigator, items, dependency in
+            return WrappingController(matchPath: matchPath) {
+                AuthView(navigator: navigator)
+            }
+        }
+    }
+}
 
 struct AuthView: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    
+    let navigator: LinkNavigatorType
     
     var body: some View {
         ZStack {
@@ -64,7 +78,9 @@ struct AuthView: View {
                 .cornerRadius(6)
                 
                 Button(action: {
-                    // Handle button tap here
+                    //
+                    navigator.backOrNext(path: "Home", items: [:], isAnimated: true)
+                    //
                 }) {
                     Text("Login")
                         .frame(maxWidth: .infinity)
@@ -74,15 +90,14 @@ struct AuthView: View {
                         .background(.linearGradient(Gradient.init(colors: [.white, Color.purple]), startPoint: UnitPoint(x: 0, y: 5), endPoint: UnitPoint(x: 1, y: 1)))
                         .cornerRadius(14)
                 }
-                
             }.padding([.horizontal])
             
         }
     }
 }
 
-#Preview {
-    AuthView()
-        .modelContainer(for: Item.self, inMemory: true)
-}
+//#Preview {
+//    AuthView(navigator: LinkNavigatorType)
+//        .modelContainer(for: Item.self, inMemory: true)
+//}
 

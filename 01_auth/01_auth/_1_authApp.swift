@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import LinkNavigator
 
 @main
 struct _1_authApp: App {
@@ -22,11 +23,22 @@ struct _1_authApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    
+    var navigator: LinkNavigator {
+      appDelegate.navigator
+    }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }
+            navigator
+              .launch(paths: ["Login"], items: [:])
+              .onOpenURL { url in
+              // in case you need deep link navigation,
+              // deep links should be processed here.
+              }
+          }
         .modelContainer(sharedModelContainer)
     }
 }

@@ -7,10 +7,25 @@
 
 import SwiftUI
 import SwiftData
+import LinkNavigator
 
-struct ContentView: View {
+struct HomeRouteBuilder: RouteBuilder {
+  var matchPath: String { "Home" }
+
+  var build: (LinkNavigatorType, [String: String], DependencyType) -> MatchingViewController? {
+    { navigator, items, dependency in
+      return WrappingController(matchPath: matchPath) {
+          HomeView(navigator: navigator)
+      }
+    }
+  }
+}
+
+struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
+    
+    let navigator: LinkNavigatorType
 
     var body: some View {
         NavigationSplitView {
@@ -53,9 +68,4 @@ struct ContentView: View {
             }
         }
     }
-}
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
